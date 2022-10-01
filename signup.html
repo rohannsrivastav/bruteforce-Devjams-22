@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Disbursal</title>
+    <title>Save form Data in a Text File using JavaScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    	div {
+            padding: 10px;
+            background-color: #f6f6f6;
+            overflow: hidden;
+        }
+    	input[type=text], textarea, select {
+            font: 17px Calibri;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=button]{
+            font: 17px Calibri;
+            width: auto;
+            float: right;
+            cursor: pointer;
+            padding: 7px;
+        }
+    </style>
+</head>
+<body>
+    <header class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+          <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            <span class="ml-3 text-xl">UPI restrictor</span>
+          </a>
+          <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center"></nav>
+          <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-40 md:mt-0"><a href="index.html">Log out</a>
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+      <section class="text-gray-600 body-font">
+        <div class="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
+          <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="https://childdevelopmentinfo.com/wp-content/uploads/2011/09/Setting-Limits-mini.jpg">
+          <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Set limit</h1>
+            <p class="mb-8 leading-relaxed">Set the limit you want to spend per day.</p>
+            <div class="flex w-full justify-center items-end">
+              <div class="relative mr-4 lg:w-full xl:w-1/2 w-2/4 md:w-full text-left">
+                <label for="hero-field" class="leading-7 text-sm text-gray-600">Write amount(in Rs.)</label>
+                <input type="number" min="0" oninput="this.value=Math.abs(this.value)" id="txtLimit" class="w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" placeholder="Enter your limit" />
+                <input type="button" class="inline-flex text-white bg-indigo-500 border-10 py-10 px-60 focus:outline-none hover:bg-indigo-600 rounded text-lg" id="bt" value="Set" onclick="saveFile()" />
+              </div>
+            </div>
+            <p class="text-sm mt-2 text-gray-500 mb-8 w-full">You can modify the limit later. *(T&C) apply.</p>
+
+          </div>
+        </div>
+      </section>
+  </body>
+  <script>
+    let saveFile = () => {
+
+        // Get the data from each element on the form.
+    	const limit = document.getElementById('txtLimit');
+
+        // This variable stores all the data.
+        let data =
+           limit.value + ' \r\n ';
+
+        // Convert the text to BLOB.
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'formData.txt';	   // The file to save the data.
+
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click();
+    }
+</script>
+</html>
